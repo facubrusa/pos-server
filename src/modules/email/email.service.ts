@@ -1,16 +1,16 @@
 import nodemailer from 'nodemailer';
 import config from '../../config/config';
-import logger from '../logger/logger';
+// import logger from '../logger/logger';
 import { Message } from './email.interfaces';
 
 export const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
-if (config.env !== 'test') {
+/* if (config.env !== 'test') {
   transport
     .verify()
     .then(() => logger.info('Connected to email server'))
     .catch(() => logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env'));
-}
+} */
 
 /**
  * Send an email
@@ -84,7 +84,7 @@ export const sendSuccessfulRegistration = async (to: string, token: string, name
   // replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`;
   const text = `Hi ${name},
-  Congratulations! Your account has been created. 
+  Congratulations! Your account has been created.
   You are almost there. Complete the final step by verifying your email at: ${verificationEmailUrl}
   Don't hesitate to contact us if you face any problems
   Regards,
@@ -109,7 +109,7 @@ export const sendAccountCreated = async (to: string, name: string): Promise<void
   // replace this url with the link to the email verification page of your front-end app
   const loginUrl = `http://${config.clientUrl}/auth/login`;
   const text = `Hi ${name},
-  Congratulations! Your account has been created successfully. 
+  Congratulations! Your account has been created successfully.
   You can now login at: ${loginUrl}
   Don't hesitate to contact us if you face any problems
   Regards,

@@ -45,9 +45,3 @@ export const resetPassword = {
     password: Joi.string().required().custom(password),
   }),
 };
-
-export const verifyEmail = {
-  query: Joi.object().keys({
-    token: Joi.string().required(),
-  }),
-};

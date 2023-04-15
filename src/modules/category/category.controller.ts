@@ -1,0 +1,30 @@
+import httpStatus from 'http-status';
+import { Request, Response } from 'express';
+import mongoose from 'mongoose';
+import catchAsync from '../utils/catchAsync';
+import ApiError from '../errors/ApiError';
+import pick from '../utils/pick';
+import { IOptions } from '../paginate/paginate';
+import * as categoryService from './category.service';
+
+export const createCategory = catchAsync(async (req: Request, res: Response) => {
+  const category = await categoryService.createCategory(req.body);
+  res.status(httpStatus.CREATED).send(category);
+});
+
+export const getCategories = catchAsync(async (req: Request, res: Response) => {
+  const filter = pick(req.query, ['name', 'role']);
+  const options: IOptions = pick(req.query, ['sortBy', 'limit', 'page', 'projectBy']);
+  const result = await categoryService.queryCategories(filter, options);
+  res.send(result);
+});
+
+export const getCategory = catchAsync(async (req: Request, res: Response) => {
+  if (typeof req.params['categoryId'] === 'string') {
+    const category = await categoryService.getCategoryById(new mongoose.Types.ObjectId(req.params['categoryId']));
+    if (!category) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Category not found');
+    }
+    res.send(category);
+  }
+});

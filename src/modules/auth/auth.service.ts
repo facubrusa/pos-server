@@ -73,23 +73,3 @@ export const resetPassword = async (resetPasswordToken: any, newPassword: string
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed');
   }
 };
-
-/**
- * Verify email
- * @param {string} verifyEmailToken
- * @returns {Promise<IUserDoc | null>}
- */
-export const verifyEmail = async (verifyEmailToken: any): Promise<IUserDoc | null> => {
-  try {
-    const verifyEmailTokenDoc = await verifyToken(verifyEmailToken, tokenTypes.VERIFY_EMAIL);
-    const user = await getUserById(new mongoose.Types.ObjectId(verifyEmailTokenDoc.user));
-    if (!user) {
-      throw new Error();
-    }
-    await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL });
-    const updatedUser = await updateUserById(user.id, { isEmailVerified: true });
-    return updatedUser;
-  } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed');
-  }
-};

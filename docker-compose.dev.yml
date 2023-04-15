@@ -4,10 +4,10 @@ services:
   mongo:
     volumes:
       - ./data:/data/db
-  
-  app:
-    container_name: ts-node-app-dev
-    command: yarn dev -L
+
+  # app:
+  #   container_name: ts-node-app-dev
+  #   command: yarn dev -L
 
 volumes:
   mongo-data:
