@@ -11,8 +11,9 @@ const categorySchema = new Schema<ICategoryDoc, ICategoryModel>(
       trim: true,
     },
     active: {
-      type: Number,
-      required: true,
+      type: Boolean,
+      required: false,
+      default: true,
     },
     image: {
       type: String,

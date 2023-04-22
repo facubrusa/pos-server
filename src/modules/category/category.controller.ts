@@ -28,3 +28,20 @@ export const getCategory = catchAsync(async (req: Request, res: Response) => {
     res.send(category);
   }
 });
+
+export const updateCategory = catchAsync(async (req: Request, res: Response) => {
+  if (typeof req.params['categoryId'] === 'string') {
+    const category = await categoryService.updateCategoryById(
+      new mongoose.Types.ObjectId(req.params['categoryId']),
+      req.body
+    );
+    res.send(category);
+  }
+});
+
+export const deleteCategory = catchAsync(async (req: Request, res: Response) => {
+  if (typeof req.params['categoryId'] === 'string') {
+    await categoryService.deleteCategoryById(new mongoose.Types.ObjectId(req.params['categoryId']));
+    res.status(httpStatus.NO_CONTENT).send();
+  }
+});

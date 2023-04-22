@@ -4,6 +4,10 @@ import docsRoute from './swagger.route';
 import userRoute from './user.route';
 import productRoute from './product.route';
 import categoryRoute from './category.route';
+import preferenceRoute from './preference.route';
+import groupRoute from './group.route';
+import groupPreferenceRoute from './group_preference.route';
+import productPreferenceRoute from './product_preference.route';
 import config from '../../config/config';
 
 const router = express.Router();
@@ -29,6 +33,22 @@ const defaultIRoute: IRoute[] = [
   {
     path: '/categories',
     route: categoryRoute,
+  },
+  {
+    path: '/preferences',
+    route: preferenceRoute,
+  },
+  {
+    path: '/groups',
+    route: groupRoute,
+  },
+  {
+    path: '/group_preferences',
+    route: groupPreferenceRoute,
+  },
+  {
+    path: '/product_preferences',
+    route: productPreferenceRoute,
   },
 ];
 

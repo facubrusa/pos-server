@@ -9,6 +9,7 @@ const productSchema = new Schema<IProductDoc, IProductModel>(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -19,6 +20,7 @@ const productSchema = new Schema<IProductDoc, IProductModel>(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     price: {
       type: Number,
@@ -26,7 +28,7 @@ const productSchema = new Schema<IProductDoc, IProductModel>(
     },
     active: {
       type: Boolean,
-      required: true,
+      required: false,
       default: true,
     },
     stock: {
@@ -57,6 +59,20 @@ const productSchema = new Schema<IProductDoc, IProductModel>(
 // add plugin that converts mongoose to json
 productSchema.plugin(toJSON);
 productSchema.plugin(paginate);
+
+/**
+ * Check if product is taken
+ * @param {string} product_id - The product's product
+ * @param {ObjectId} [excludeProductId] - The id of the product to be excluded
+ * @returns {Promise<boolean>}
+ */
+productSchema.static(
+  'isProductTaken',
+  async function (name: string, excludeProductId: Schema.Types.ObjectId): Promise<boolean> {
+    const product = await this.findOne({ name, _id: { $ne: excludeProductId } });
+    return !!product;
+  }
+);
 
 const Product = model<IProductDoc, IProductModel>('Product', productSchema);
 

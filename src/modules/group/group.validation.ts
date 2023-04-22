@@ -1,23 +1,19 @@
 import Joi from 'joi';
 import { objectId } from '../validate/custom.validation';
 
-const createCategoryBody = {
+const createGroupBody = {
   name: Joi.string().required(),
   active: Joi.boolean().required(),
-  image: Joi.string().required(),
-  background_color: Joi.string().required(),
 };
 
-export const createCategory = {
-  body: Joi.object().keys(createCategoryBody),
+export const createGroup = {
+  body: Joi.object().keys(createGroupBody),
 };
 
-export const getCategories = {
+export const getGroups = {
   query: Joi.object().keys({
     name: Joi.string(),
     active: Joi.boolean(),
-    image: Joi.string(),
-    background_color: Joi.string(),
     sortBy: Joi.string(),
     projectBy: Joi.string(),
     limit: Joi.number().integer(),
@@ -25,28 +21,26 @@ export const getCategories = {
   }),
 };
 
-export const getCategory = {
+export const getGroup = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(objectId),
+    groupId: Joi.string().custom(objectId),
   }),
 };
 
-export const updateCategory = {
+export const updateGroup = {
   params: Joi.object().keys({
-    categoryId: Joi.required().custom(objectId),
+    groupId: Joi.required().custom(objectId),
   }),
   body: Joi.object()
     .keys({
       name: Joi.string(),
       active: Joi.boolean(),
-      image: Joi.string(),
-      background_color: Joi.string(),
     })
     .min(1),
 };
 
-export const deleteCategory = {
+export const deleteGroup = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(objectId),
+    groupId: Joi.string().custom(objectId),
   }),
 };

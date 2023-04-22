@@ -4,7 +4,7 @@ import { AccessAndRefreshTokens } from '../token/token.interfaces';
 
 export interface ICategory {
   name: string;
-  active: number;
+  active: boolean;
   image: string;
   background_color: string;
   createdAt: Date;
